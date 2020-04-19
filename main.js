@@ -6,6 +6,7 @@ $(document).ready(function(){
   var intervalCreaBolle;
   var checkLose;
   var movimentoBolle;
+  var countdownInterval;
 
   // definisco una variabile di appoggio che mi servirà per quantificare le vittorie del player
    var numberVictory = 0;
@@ -23,6 +24,8 @@ $(document).ready(function(){
       // eseguo la funzione aggiungiBolla per 15  volte, quindi vengono create 15 bolle e aggiunte al body
       aggiungiBolla();
     }
+
+    countdown(40); // richiamo funzione che stampa in pagina il countdown
 
     bolleClick(); // richiamo funzione che gestisci il click sulle bolle
 
@@ -43,6 +46,8 @@ $(document).ready(function(){
         // eseguo la funzione aggiungiBolla per 20 volte, quindi vengono create 10 bolle e aggiunte al body
         aggiungiBolla();
       }
+
+      countdown(40); // richiamo funzione che stampa in pagina il countdown
 
       bolleClick();
 
@@ -68,6 +73,8 @@ $(document).ready(function(){
             aggiungiBolla();
           }
 
+          countdown(35); // richiamo funzione che stampa in pagina il countdown
+
           bolleClick();
 
           timing(1500, 35000);
@@ -83,6 +90,8 @@ $(document).ready(function(){
             // eseguo la funzione aggiungiBolla per 25 volte, quindi vengono create 10 bolle e aggiunte al body
             aggiungiBolla();
           }
+
+          countdown(30); // richiamo funzione che stampa in pagina il countdown
 
           bolleClick();
 
@@ -208,7 +217,7 @@ $(document).ready(function(){
             // quando la bolla viene eliminata dal documento faccio un controllo per vedere se sono presenti ancora bolle nel documento. Se così fosse il player ha superato il livello
             if ($('.bolla').length == 0) {
 
-
+              clearInterval(countdownInterval); // stoppo il countdown
               clearInterval(intervalCreaBolle); // stoppo la creazione di bolle
               clearTimeout(checkLose); // stoppo il check per vedere se il player ha perso
               clearInterval(movimentoBolle); // stoppo il movimento delle bolle
@@ -354,7 +363,7 @@ $(document).ready(function(){
         clearInterval(intervalCreaBolle); // stoppo la creazione delle bolle
         clearInterval(movimentoBolle); // stoppo il movimento delle bolle
         $('body').off('click'); // stoppo l'evento click al body e quindi di conseguenza alle bolle
-        $('body').append('<div class="overlay"><div class="loser"><h2>Hai perso</h2><button id="riprova">Riprova</button></div></div>'); // aggiungo al body l'overlay e il bottone "riprova"
+        $('body').append('<div class="overlay"><div class="loser"><h2>GAME OVER</h2><button id="riprova">Riprova</button></div></div>'); // aggiungo al body l'overlay e il bottone "riprova"
 
         // modifico stile bottone "riprova"
       $('#riprova').css({
@@ -394,6 +403,8 @@ $(document).ready(function(){
               // eseguo la funzione aggiungiBolla per 15  volte, quindi vengono create 15 bolle e aggiunte al body
               aggiungiBolla();
             }
+
+            countdown(40); // richiamo funzione che stampa in pagina il countdown
 
             bolleClick(); // richiamo funzione che gestisci il click sulle bolle
 
@@ -435,5 +446,32 @@ $(document).ready(function(){
   function generateColor () {
     return Math.floor(Math.random() * 256);
   }
+
+
+
+  // funzione che stampa in pagina il numero dei secondi che rimangono per superare il livello
+  function countdown (seconds) {
+
+    var numberCountdown = seconds;
+     countdownInterval = setInterval(function () {
+
+      if (numberCountdown == 0) {
+
+        clearInterval(countdownInterval);
+
+        $('.count-down').animate({
+          fontSize: "40px",
+        }, 1000);
+
+      } else {
+
+        numberCountdown --;
+        $('.container-count-down').html('<h2 class="count-down">' + numberCountdown + '</h2>');
+        $('.count-down').css({"color": "rgba(" + generateColor() + ", " + generateColor() + ", " +  generateColor() + ")"});
+      }
+
+    }, 1000);
+  }
+
 
 });

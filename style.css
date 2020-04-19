@@ -111,6 +111,16 @@ span {
   box-shadow: inset 2px 3px 10px rgba(0, 0, 0, 0.5);
 }
 
+.count-down {
+  position: absolute;
+  bottom: 2px;
+  right: 7px;
+}
+
+.count-down h2 {
+  font-size: 30px;
+}
+
 @keyframes scale {
 
   0% {
